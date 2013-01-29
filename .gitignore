@@ -1,2 +1,10 @@
 *.dc~
 *.ap~
+*.dll
+*.exe
+*.clw
+*/*
+*.inc
+*.shp
+*.exp
+*.ini

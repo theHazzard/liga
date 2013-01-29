@@ -8,6 +8,7 @@
     <AssemblyName>Liga</AssemblyName>
     <OutputName>Liga</OutputName>
     <CWOutputType>Exe</CWOutputType>
+    <DefineConstants>FM2=&gt;1%3b_ABCDllMode_=&gt;0%3b_ABCLinkMode_=&gt;1</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>True</DebugSymbols>
@@ -23,5 +24,22 @@
     <check_stack>False</check_stack>
     <check_index>False</check_index>
   </PropertyGroup>
+  <ItemGroup>
+    <FileDriver Include="DOS" />
+    <FileDriver Include="TOPSPEED" />
+    <Compile Include="Liga.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="Liga001.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="LIGA_BC.CLW">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="Liga_BC0.CLW">
+      <Generated>true</Generated>
+    </Compile>
+    <Library Include="c%25V%25FM3%25X%25%25L%25.lib" />
+  </ItemGroup>
   <Import Project="$(ClarionBinPath)\SoftVelocity.Build.Clarion.targets" />
 </Project>
