@@ -9,6 +9,8 @@
     <OutputName>Liga</OutputName>
     <CWOutputType>Exe</CWOutputType>
     <DefineConstants>FM2=&gt;1%3b_ABCDllMode_=&gt;0%3b_ABCLinkMode_=&gt;1</DefineConstants>
+    <stack_size>16384</stack_size>
+    <CopyCore>True</CopyCore>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>True</DebugSymbols>
@@ -23,6 +25,8 @@
     <vid>off</vid>
     <check_stack>False</check_stack>
     <check_index>False</check_index>
+    <GenerateMap>True</GenerateMap>
+    <line_numbers>False</line_numbers>
   </PropertyGroup>
   <ItemGroup>
     <FileDriver Include="DOS" />

@@ -9,4 +9,6 @@
 *.exp
 *.ini
 *.bpp
+*.tps
+*.bct
 
