@@ -1,0 +1,24 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration>Release</Configuration>
+    <Platform>Win32</Platform>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>WinPreview14323d25-4e15-4e33-8b7d-1c62d7ece3c6</AssemblyName>
+    <OutputName>WinPreview14323d25-4e15-4e33-8b7d-1c62d7ece3c6</OutputName>
+    <Model>Lib</Model>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <vid>off</vid>
+    <check_stack>False</check_stack>
+    <check_index>False</check_index>
+    <clarion_version>
+    </clarion_version>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="WinPreview14323d25-4e15-4e33-8b7d-1c62d7ece3c6.clw" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="WinPreview14323d25-4e15-4e33-8b7d-1c62d7ece3c6.exe.manifest" />
+  </ItemGroup>
+  <Import Project="C:\Program Files (x86)\SoftVelocity\Clarion8\bin\SoftVelocity.Build.Clarion.targets" />
+</Project>

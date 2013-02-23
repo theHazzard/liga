@@ -1,18 +1,11 @@
 [PROCEDURE]
-NAME Brw_Equipos
-CATEGORY 'Browse'
+NAME Wnd_Login
+CATEGORY 'Window'
 [COMMON]
-DESCRIPTION 'Browse the Equipos file'
+DESCRIPTION 'Window'
 FROM ABC Window
 [DATA]
-CurrentTab                STRING(80)
 [FILES]
-[PRIMARY]
-Equipos
-[INSTANCE]
-1
-[KEY]
-Equ:EQU_Por_EquiposId
 [PROMPTS]
 %ButtonAction DEPEND %Control STRING TIMES 0
 
@@ -43,228 +36,22 @@ Equ:EQU_Por_EquiposId
 %PostLookupProcedure DEPEND %Control PROCEDURE TIMES 0
 
 %ForceWindowRefresh DEPEND %Control LONG TIMES 0
-[ADDITION]
-NAME ABC BrowseBox
-[INSTANCE]
-INSTANCE 1
-PROCPROP
-[PROMPTS]
-%AcceptToolbarControl LONG (0)
-%EnableQuickScan LONG  (0)
-
-%LocatorType DEFAULT  ('Step')
-%OverrideDefaultLocator DEFAULT ('')
-%OverrideLocator DEFAULT ('')
-
-%RecordFilter @S255  ('')
-
-%RangeField COMPONENT  ()
-
-%RangeLimitType DEFAULT  ('')
-%RangeLimit FIELD  ()
-%RangeLow FIELD  ()
-%RangeHigh FIELD  ()
-%RangeFile FILE  ()
-%ScrollBehavior DEFAULT  ('Movable Thumb')
-%ScrollKeyDistribution STRING  ('Runtime')
-%CustomKeyDistribution MULTI LONG  ()
-%KeyDistributionValue DEPEND %CustomKeyDistribution @S10 TIMES 0
-
-%ScrollAlpha LONG  (1)
-%ScrollNumeric LONG  (0)
-%ScrollAlt LONG  (0)
-%SortOrder MULTI LONG  (1)
-%SortCondition DEPEND %SortOrder @S255 TIMES 1
-WHEN  (1) ('CHOICE(?CurrentTab) = 2')
-%SortKey DEPEND %SortOrder KEY TIMES 1
-WHEN  (1) (Equ:EQU_Por_NombreEquipo)
-%SortLocatorType DEPEND %SortOrder DEFAULT TIMES 1
-WHEN  (1) ('Step')
-%SortOverrideDefaultLocator DEPEND %SortOrder DEFAULT TIMES 1
-WHEN  (1) ('')
-%SortOverrideLocator DEPEND %SortOrder DEFAULT TIMES 1
-WHEN  (1) ('')
-%SortRecordFilter DEPEND %SortOrder @S255 TIMES 1
-WHEN  (1) ('')
-%SortRangeField DEPEND %SortOrder COMPONENT TIMES 0 !HOLA 0
-%SortRangeLimit DEPEND %SortOrder FIELD TIMES 1
-WHEN  (1) ()
-%SortRangeLow DEPEND %SortOrder FIELD TIMES 1
-WHEN  (1) ()
-%SortRangeHigh DEPEND %SortOrder FIELD TIMES 1
-WHEN  (1) ()
-%SortRangeFile DEPEND %SortOrder FILE TIMES 1
-WHEN  (1) ()
-%SortRangeLimitType DEPEND %SortOrder DEFAULT TIMES 1
-WHEN  (1) ('')
-%SortScrollBehavior DEPEND %SortOrder DEFAULT TIMES 1
-WHEN  (1) ('Movable Thumb')
-%SortScrollKeyDistribution DEPEND %SortOrder STRING TIMES 1
-WHEN  (1) ('Runtime')
-%SortCustomKeyDistribution DEPEND %SortOrder MULTI LONG TIMES 0
-%SortKeyDistributionValue DEPEND %SortCustomKeyDistribution @S10 TIMES 1
-WHEN  (1)TIMES 0
-%SortScrollAlpha DEPEND %SortOrder LONG TIMES 1
-WHEN  (1) (1)
-%SortScrollNumeric DEPEND %SortOrder LONG TIMES 1
-WHEN  (1) (0)
-%SortScrollAlt DEPEND %SortOrder LONG TIMES 1
-WHEN  (1) (0)
-[ADDITION]
-NAME ABC BrowseSelectButton
-[INSTANCE]
-INSTANCE 2
-PARENT 1
-[PROMPTS]
-%HideIfDisabled LONG  (1)
-[ADDITION]
-NAME ABC BrowseViewButton
-[INSTANCE]
-INSTANCE 3
-PARENT 1
-[ADDITION]
-NAME ABC BrowseUpdateButtons
-[INSTANCE]
-INSTANCE 4
-PARENT 1
-PROCPROP
-[PROMPTS]
-%UpdateProcedure PROCEDURE  (UpdateEquipos)
-%EditViaPopup LONG  (1)
 [ADDITION]
 NAME ABC CloseButton
 [INSTANCE]
-INSTANCE 5
-[ADDITION]
-NAME ABC HelpButton
-[INSTANCE]
-INSTANCE 6
-[ADDITION]
-NAME ABC WindowResize
-[INSTANCE]
-INSTANCE 7
-[PROMPTS]
-%UseAppStrategy    DEFAULT (1)
-%AppStrategy       DEFAULT ('Surface')
-%RestrictMinSize   DEFAULT (1)
-%WindowMinWidth    DEFAULT (0)
-%WindowMaxWidth    DEFAULT (0)
-[WINDOW]
-QuickWindow WINDOW('Browse the Equipos file'),AT(,,312,198),IMM,RESIZE,GRAY,MDI,HLP('Brw_Equipos'),FONT('MS Sans Serif',8,,400,1),CENTER,SYSTEM
-    LIST,AT(8,30,296,124),USE(?Browse:1),MSG('Browsing the Equipos file'),IMM,HVSCROLL,|
-      FORMAT('64R(2)|M~Equipos Id~C(0)@n-14@80L(2)|M~Nombre Equipo~L(2)@s120@80R(2)|M~Alta~C(0)@d17@80R(2)|M~Baja~C(0)@d17@'),|
-      FROM(Queue:Browse:1),#SEQ(1),#ORIG(?List),#FIELDS(Equ:EquiposId,Equ:NombreEquipo,Equ:Alta,Equ:Baja)
-    BUTTON('&Select'),AT(43,158,49,14),USE(?Select:2),ICON('WASELECT.ICO'),FLAT,MSG('Select the Record'),TIP('Select the Record'),LEFT,#SEQ(2),#ORIG(?Select)
-    BUTTON('&View'),AT(96,158,49,14),USE(?View:3),ICON('WAVIEW.ICO'),FLAT,MSG('View Record'),TIP('View Record'),LEFT,#SEQ(3),#ORIG(?View)
-    BUTTON('&Insert'),AT(149,158,49,14),USE(?Insert:4),ICON('WAINSERT.ICO'),FLAT,MSG('Insert a Record'),TIP('Insert a Record'),LEFT,#SEQ(4),#ORIG(?Insert),#LINK(?Change:4)
-    BUTTON('&Change'),AT(202,158,49,14),USE(?Change:4),ICON('WACHANGE.ICO'),FLAT,MSG('Change the Record'),TIP('Change the Record'),LEFT,DEFAULT,#SEQ(4),#ORIG(?Change),#LINK(?Delete:4)
-    BUTTON('&Delete'),AT(255,158,49,14),USE(?Delete:4),ICON('WADELETE.ICO'),FLAT,MSG('Delete the Record'),TIP('Delete the Record'),LEFT,#SEQ(4),#ORIG(?Delete),#LINK(?Insert:4)
-  SHEET,AT(4,4,304,172),USE(?CurrentTab),#ORIG(CurrentTab)
-    TAB('&1) EQU_Por_EquiposId'),USE(?Tab:2)
-    END
-    TAB('&2) EQU_Por_NombreEquipo'),USE(?Tab:3)
-    END
-  END
-  BUTTON('&Close'),AT(206,180,49,14),USE(?Close),ICON('WACLOSE.ICO'),FLAT,MSG('Close Window'),TIP('Close Window'),LEFT,#SEQ(5),#ORIG(?Close)
-  BUTTON('&Help'),AT(259,180,49,14),USE(?Help),ICON('WAHELP.ICO'),FLAT,MSG('See Help Window'),TIP('See Help Window'),LEFT,STD(STD:Help),#SEQ(6),#ORIG(?Help)
- END
-[PROCEDURE]
-NAME UpdateEquipos
-CATEGORY 'Form'
-[COMMON]
-DESCRIPTION 'Form Equipos'
-FROM ABC Window
-[DATA]
-CurrentTab                STRING(80)
-[FILES]
-[PRIMARY]
-Equipos
-[INSTANCE]
-2
-[PROMPTS]
-%ButtonAction DEPEND %Control STRING TIMES 0
-
-%ButtonRunName DEPEND %Control STRING TIMES 0
-
-%ButtonRunParameters DEPEND %Control STRING TIMES 0
-
-%ButtonProcedure DEPEND %Control PROCEDURE TIMES 0
-
-%ButtonThread DEPEND %Control LONG TIMES 0
-
-%ButtonThreadStack DEPEND %Control @n7 TIMES 0
-
-%ButtonParameters DEPEND %Control STRING TIMES 0
-
-%ButtonRequest DEPEND %Control STRING TIMES 0
-
-%PreLookupKey DEPEND %Control KEY TIMES 0
-
-%PreLookupField DEPEND %Control COMPONENT TIMES 0
-
-%PreLookupProcedure DEPEND %Control PROCEDURE TIMES 0
-
-%PostLookupKey DEPEND %Control KEY TIMES 0
-
-%PostLookupField DEPEND %Control COMPONENT TIMES 0
-
-%PostLookupProcedure DEPEND %Control PROCEDURE TIMES 0
-
-%ForceWindowRefresh DEPEND %Control LONG TIMES 0
-[ADDITION]
-NAME ABC RecordValidation
-[INSTANCE]
 INSTANCE 1
-PROCPROP
-[PROMPTS]
-%ValidateOnAccept LONG  (1)
-%ValidateOnNonStopSelect LONG  (1)
-%ControlsExcluded MULTI LONG  ()
-%ControlToExclude DEPEND %ControlsExcluded STRING TIMES 0
-[ADDITION]
-NAME ABC SaveButton
-[INSTANCE]
-INSTANCE 2
-PROCPROP
-[PROMPTS]
-%InsertAllowed LONG  (1)
-%InsertMessage @S40  ('Record Will Be Added')
-%ChangeAllowed LONG  (1)
-%ChangeMessage @S40  ('Record Will Be Changed')
-%DeleteAllowed LONG  (1)
-%DeleteMessage @S40  ('Record Will Be Deleted')
-%ViewMessage @S40  ('View Record')
-%MessageHeader LONG  (0)
-%ActionOnDelete STRING  ('Standard Warning')
-%PrimingFields MULTI LONG  ()
-%PrimedField DEPEND %PrimingFields FIELD TIMES 0
-
-%PrimedValue DEPEND %PrimingFields @S255 TIMES 0
-
-%ActionOnCancel STRING  ('Confirm cancel')
-%MessageLocation STRING  ('Title Bar')
-%MessageStatusSection @n1  (0)
-
-%HistoryKey        DEFAULT (CtrlH)
-
-%AppendToTitle LONG  ()
-%AppendToTitleID @S255  ('')
 [ADDITION]
 NAME ABC CancelButton
 [INSTANCE]
-INSTANCE 3
+INSTANCE 2
 [ADDITION]
 NAME ABC HelpButton
 [INSTANCE]
-INSTANCE 4
-[ADDITION]
-NAME ABC ViewFormActions
-[INSTANCE]
-INSTANCE 5
+INSTANCE 3
 [ADDITION]
 NAME ABC WindowResize
 [INSTANCE]
-INSTANCE 6
+INSTANCE 4
 [PROMPTS]
 %UseAppStrategy    DEFAULT (1)
 %AppStrategy       DEFAULT ('Surface')
@@ -272,20 +59,8 @@ INSTANCE 6
 %WindowMinWidth    DEFAULT (0)
 %WindowMaxWidth    DEFAULT (0)
 [WINDOW]
-QuickWindow WINDOW('Form Equipos'),AT(,,358,98),RESIZE,IMM,GRAY,MDI,HLP('UpdateEquipos'),FONT('MS Sans Serif',8,,400,1),CENTER,SYSTEM
-  SHEET,AT(4,4,350,72),USE(?CurrentTab),#ORIG(CurrentTab)
-    TAB('&1) General'),USE(?Tab:1)
-         PROMPT('Equipos Id:'),USE(?Equ:EquiposId:Prompt),TRN,AT(8,20),#ORIG(?Equ:EquiposId:Prompt),#LINK(Equ:EquiposId)
-         ENTRY(@n-14),USE(Equ:EquiposId),RIGHT(1),AT(68,20,64,10),#ORIG(Equ:EquiposId),#LINK(?Equ:EquiposId:Prompt)
-         PROMPT('Nombre Equipo:'),USE(?Equ:NombreEquipo:Prompt),TRN,AT(8,34),#ORIG(?Equ:NombreEquipo:Prompt),#LINK(Equ:NombreEquipo)
-         ENTRY(@s120),USE(Equ:NombreEquipo),AT(68,34,282,10),#ORIG(Equ:NombreEquipo),#LINK(?Equ:NombreEquipo:Prompt)
-         PROMPT('Alta:'),USE(?Equ:Alta:Prompt),TRN,AT(8,48),#ORIG(?Equ:Alta:Prompt),#LINK(Equ:Alta)
-         ENTRY(@d17),USE(Equ:Alta),AT(68,48,104,10),#ORIG(Equ:Alta),#LINK(?Equ:Alta:Prompt)
-         PROMPT('Baja:'),USE(?Equ:Baja:Prompt),TRN,AT(8,62),#ORIG(?Equ:Baja:Prompt),#LINK(Equ:Baja)
-         ENTRY(@d17),USE(Equ:Baja),AT(68,62,104,10),#ORIG(Equ:Baja),#LINK(?Equ:Baja:Prompt)
-    END
-  END
-  BUTTON('&OK'),AT(199,80,49,14),USE(?OK),ICON('WAOK.ICO'),FLAT,MSG('Accept data and close the window'),TIP('Accept data and close the window'),LEFT,DEFAULT,#SEQ(2),#ORIG(?OK)
-  BUTTON('&Cancel'),AT(252,80,49,14),USE(?Cancel),ICON('WACANCEL.ICO'),FLAT,MSG('Cancel operation'),TIP('Cancel operation'),LEFT,#SEQ(3),#ORIG(?Cancel)
-  BUTTON('&Help'),AT(305,80,49,14),USE(?Help),ICON('WAHELP.ICO'),FLAT,MSG('See Help Window'),TIP('See Help Window'),LEFT,STD(STD:Help),#SEQ(4),#ORIG(?Help)
+QuickWindow WINDOW('Window'),AT(,,260,160),RESIZE,IMM,GRAY,HLP('Wnd_Login'),FONT('MS Sans Serif',8,,400,1),CENTER,SYSTEM
+  BUTTON('&OK'),AT(101,142,49,14),USE(?Ok),ICON('WAOK.ICO'),FLAT,MSG('Accept operation'),TIP('Accept Operation'),LEFT,#SEQ(1),#ORIG(?Ok)
+  BUTTON('&Cancel'),AT(154,142,49,14),USE(?Cancel),ICON('WACANCEL.ICO'),FLAT,MSG('Cancel Operation'),TIP('Cancel Operation'),LEFT,#SEQ(2),#ORIG(?Cancel)
+  BUTTON('&Help'),AT(207,142,49,14),USE(?Help),ICON('WAHELP.ICO'),FLAT,MSG('See Help Window'),TIP('See Help Window'),LEFT,STD(STD:Help),#SEQ(3),#ORIG(?Help)
  END
