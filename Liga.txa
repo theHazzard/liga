@@ -1,11 +1,18 @@
 [PROCEDURE]
-NAME Wnd_Login
-CATEGORY 'Window'
+NAME Brw_EquiposJugadores
+CATEGORY 'Browse'
 [COMMON]
-DESCRIPTION 'Window'
+DESCRIPTION 'Browse the Equipos file'
 FROM ABC Window
 [DATA]
+CurrentTab                STRING(80)
 [FILES]
+[PRIMARY]
+Equipos
+[INSTANCE]
+1
+[KEY]
+Equ:EQU_Por_EquiposId
 [PROMPTS]
 %ButtonAction DEPEND %Control STRING TIMES 0
 
@@ -37,21 +44,84 @@ FROM ABC Window
 
 %ForceWindowRefresh DEPEND %Control LONG TIMES 0
 [ADDITION]
-NAME ABC CloseButton
+NAME ABC BrowseBox
 [INSTANCE]
 INSTANCE 1
+PROCPROP
+[PROMPTS]
+%AcceptToolbarControl LONG (0)
+%EnableQuickScan LONG  (0)
+
+%LocatorType DEFAULT  ('Step')
+%OverrideDefaultLocator DEFAULT ('')
+%OverrideLocator DEFAULT ('')
+
+%RecordFilter @S255  ('')
+
+%RangeField COMPONENT  ()
+
+%RangeLimitType DEFAULT  ('')
+%RangeLimit FIELD  ()
+%RangeLow FIELD  ()
+%RangeHigh FIELD  ()
+%RangeFile FILE  ()
+%ScrollBehavior DEFAULT  ('Fixed Thumb')
+%SortOrder MULTI LONG  (1)
+%SortCondition DEPEND %SortOrder @S255 TIMES 1
+WHEN  (1) ('CHOICE(?CurrentTab) = 2')
+%SortKey DEPEND %SortOrder KEY TIMES 1
+WHEN  (1) (Equ:EQU_Por_NombreEquipo)
+%SortLocatorType DEPEND %SortOrder DEFAULT TIMES 1
+WHEN  (1) ('Step')
+%SortOverrideDefaultLocator DEPEND %SortOrder DEFAULT TIMES 1
+WHEN  (1) ('')
+%SortOverrideLocator DEPEND %SortOrder DEFAULT TIMES 1
+WHEN  (1) ('')
+%SortRecordFilter DEPEND %SortOrder @S255 TIMES 1
+WHEN  (1) ('')
+%SortRangeField DEPEND %SortOrder COMPONENT TIMES 0 !HOLA 0
+%SortRangeLimit DEPEND %SortOrder FIELD TIMES 1
+WHEN  (1) ()
+%SortRangeLow DEPEND %SortOrder FIELD TIMES 1
+WHEN  (1) ()
+%SortRangeHigh DEPEND %SortOrder FIELD TIMES 1
+WHEN  (1) ()
+%SortRangeFile DEPEND %SortOrder FILE TIMES 1
+WHEN  (1) ()
+%SortRangeLimitType DEPEND %SortOrder DEFAULT TIMES 1
+WHEN  (1) ('')
+%SortScrollBehavior DEPEND %SortOrder DEFAULT TIMES 1
+WHEN  (1) ('Fixed Thumb')
+%SortScrollKeyDistribution DEPEND %SortOrder STRING TIMES 1
+WHEN  (1) ('Runtime')
+%SortCustomKeyDistribution DEPEND %SortOrder MULTI LONG TIMES 0
+%SortKeyDistributionValue DEPEND %SortCustomKeyDistribution @S10 TIMES 1
+WHEN  (1)TIMES 0
+%SortScrollAlpha DEPEND %SortOrder LONG TIMES 1
+WHEN  (1) (1)
+%SortScrollNumeric DEPEND %SortOrder LONG TIMES 1
+WHEN  (1) (0)
+%SortScrollAlt DEPEND %SortOrder LONG TIMES 1
+WHEN  (1) (0)
 [ADDITION]
-NAME ABC CancelButton
+NAME ABC BrowseSelectButton
 [INSTANCE]
 INSTANCE 2
+PARENT 1
+[PROMPTS]
+%HideIfDisabled LONG  (1)
 [ADDITION]
-NAME ABC HelpButton
+NAME ABC CloseButton
 [INSTANCE]
 INSTANCE 3
 [ADDITION]
-NAME ABC WindowResize
+NAME ABC HelpButton
 [INSTANCE]
 INSTANCE 4
+[ADDITION]
+NAME ABC WindowResize
+[INSTANCE]
+INSTANCE 5
 [PROMPTS]
 %UseAppStrategy    DEFAULT (1)
 %AppStrategy       DEFAULT ('Surface')
@@ -59,8 +129,17 @@ INSTANCE 4
 %WindowMinWidth    DEFAULT (0)
 %WindowMaxWidth    DEFAULT (0)
 [WINDOW]
-QuickWindow WINDOW('Window'),AT(,,260,160),RESIZE,IMM,GRAY,HLP('Wnd_Login'),FONT('MS Sans Serif',8,,400,1),CENTER,SYSTEM
-  BUTTON('&OK'),AT(101,142,49,14),USE(?Ok),ICON('WAOK.ICO'),FLAT,MSG('Accept operation'),TIP('Accept Operation'),LEFT,#SEQ(1),#ORIG(?Ok)
-  BUTTON('&Cancel'),AT(154,142,49,14),USE(?Cancel),ICON('WACANCEL.ICO'),FLAT,MSG('Cancel Operation'),TIP('Cancel Operation'),LEFT,#SEQ(2),#ORIG(?Cancel)
-  BUTTON('&Help'),AT(207,142,49,14),USE(?Help),ICON('WAHELP.ICO'),FLAT,MSG('See Help Window'),TIP('See Help Window'),LEFT,STD(STD:Help),#SEQ(3),#ORIG(?Help)
+QuickWindow WINDOW('Browse the Equipos file'),AT(,,312,198),IMM,RESIZE,GRAY,MDI,HLP('Brw_EquiposJugadores'),FONT('MS Sans Serif',8,,400,1),CENTER,SYSTEM
+    LIST,AT(8,30,296,124),USE(?Browse:1),MSG('Browsing the Equipos file'),IMM,HVSCROLL,|
+      FORMAT('64R(2)|M~Equipos Id~C(0)@n-14@80L(2)|M~Nombre Equipo~L(2)@s120@80R(2)|M~Alta~C(0)@d17@80R(2)|M~Baja~C(0)@d17@'),|
+      FROM(Queue:Browse:1),#SEQ(1),#ORIG(?List),#FIELDS(Equ:EquiposId,Equ:NombreEquipo,Equ:Alta,Equ:Baja)
+    BUTTON('&Select'),AT(255,158,49,14),USE(?Select:2),ICON('WASELECT.ICO'),FLAT,MSG('Select the Record'),TIP('Select the Record'),LEFT,#SEQ(2),#ORIG(?Select)
+  SHEET,AT(4,4,304,172),USE(?CurrentTab),#ORIG(CurrentTab)
+    TAB('&1) EQU_Por_EquiposId'),USE(?Tab:2)
+    END
+    TAB('&2) EQU_Por_NombreEquipo'),USE(?Tab:3)
+    END
+  END
+  BUTTON('&Close'),AT(206,180,49,14),USE(?Close),ICON('WACLOSE.ICO'),FLAT,MSG('Close Window'),TIP('Close Window'),LEFT,#SEQ(3),#ORIG(?Close)
+  BUTTON('&Help'),AT(259,180,49,14),USE(?Help),ICON('WAHELP.ICO'),FLAT,MSG('See Help Window'),TIP('See Help Window'),LEFT,STD(STD:Help),#SEQ(4),#ORIG(?Help)
  END
