@@ -48,11 +48,6 @@
       <Generated>true</Generated>
     </Compile>
     <Library Include="c%25V%25FM3%25X%25%25L%25.lib" />
-    <None Include="clafm3.Dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Generated>True</Generated>
-      <ProjectGenerated>True</ProjectGenerated>
-    </None>
   </ItemGroup>
   <Import Project="$(ClarionBinPath)\SoftVelocity.Build.Clarion.targets" />
 </Project>

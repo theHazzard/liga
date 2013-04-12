@@ -1,18 +1,18 @@
 [PROCEDURE]
-NAME Brw_EquiposJugadores
+NAME B_CtaCteJugadores
 CATEGORY 'Browse'
 [COMMON]
-DESCRIPTION 'Browse the Equipos file'
+DESCRIPTION 'Browse the Asociados file'
 FROM ABC Window
 [DATA]
 CurrentTab                STRING(80)
 [FILES]
 [PRIMARY]
-Equipos
+Asociados
 [INSTANCE]
 1
 [KEY]
-Equ:EQU_Por_EquiposId
+Aso:ASO_Por_AsociadosId
 [PROMPTS]
 %ButtonAction DEPEND %Control STRING TIMES 0
 
@@ -66,43 +66,60 @@ PROCPROP
 %RangeHigh FIELD  ()
 %RangeFile FILE  ()
 %ScrollBehavior DEFAULT  ('Fixed Thumb')
-%SortOrder MULTI LONG  (1)
-%SortCondition DEPEND %SortOrder @S255 TIMES 1
+%SortOrder MULTI LONG  (1,2)
+%SortCondition DEPEND %SortOrder @S255 TIMES 2
 WHEN  (1) ('CHOICE(?CurrentTab) = 2')
-%SortKey DEPEND %SortOrder KEY TIMES 1
-WHEN  (1) (Equ:EQU_Por_NombreEquipo)
-%SortLocatorType DEPEND %SortOrder DEFAULT TIMES 1
+WHEN  (2) ('CHOICE(?CurrentTab) = 3')
+%SortKey DEPEND %SortOrder KEY TIMES 2
+WHEN  (1) (Aso:ASO_Por_EquiposId)
+WHEN  (2) (Aso:ASO_Por_ApellidoNombre)
+%SortLocatorType DEPEND %SortOrder DEFAULT TIMES 2
 WHEN  (1) ('Step')
-%SortOverrideDefaultLocator DEPEND %SortOrder DEFAULT TIMES 1
+WHEN  (2) ('Step')
+%SortOverrideDefaultLocator DEPEND %SortOrder DEFAULT TIMES 2
 WHEN  (1) ('')
-%SortOverrideLocator DEPEND %SortOrder DEFAULT TIMES 1
+WHEN  (2) ('')
+%SortOverrideLocator DEPEND %SortOrder DEFAULT TIMES 2
 WHEN  (1) ('')
-%SortRecordFilter DEPEND %SortOrder @S255 TIMES 1
+WHEN  (2) ('')
+%SortRecordFilter DEPEND %SortOrder @S255 TIMES 2
 WHEN  (1) ('')
+WHEN  (2) ('')
 %SortRangeField DEPEND %SortOrder COMPONENT TIMES 0 !HOLA 0
-%SortRangeLimit DEPEND %SortOrder FIELD TIMES 1
+%SortRangeLimit DEPEND %SortOrder FIELD TIMES 2
 WHEN  (1) ()
-%SortRangeLow DEPEND %SortOrder FIELD TIMES 1
+WHEN  (2) ()
+%SortRangeLow DEPEND %SortOrder FIELD TIMES 2
 WHEN  (1) ()
-%SortRangeHigh DEPEND %SortOrder FIELD TIMES 1
+WHEN  (2) ()
+%SortRangeHigh DEPEND %SortOrder FIELD TIMES 2
 WHEN  (1) ()
-%SortRangeFile DEPEND %SortOrder FILE TIMES 1
+WHEN  (2) ()
+%SortRangeFile DEPEND %SortOrder FILE TIMES 2
 WHEN  (1) ()
-%SortRangeLimitType DEPEND %SortOrder DEFAULT TIMES 1
+WHEN  (2) ()
+%SortRangeLimitType DEPEND %SortOrder DEFAULT TIMES 2
 WHEN  (1) ('')
-%SortScrollBehavior DEPEND %SortOrder DEFAULT TIMES 1
+WHEN  (2) ('')
+%SortScrollBehavior DEPEND %SortOrder DEFAULT TIMES 2
 WHEN  (1) ('Fixed Thumb')
-%SortScrollKeyDistribution DEPEND %SortOrder STRING TIMES 1
+WHEN  (2) ('Fixed Thumb')
+%SortScrollKeyDistribution DEPEND %SortOrder STRING TIMES 2
 WHEN  (1) ('Runtime')
+WHEN  (2) ('Runtime')
 %SortCustomKeyDistribution DEPEND %SortOrder MULTI LONG TIMES 0
-%SortKeyDistributionValue DEPEND %SortCustomKeyDistribution @S10 TIMES 1
+%SortKeyDistributionValue DEPEND %SortCustomKeyDistribution @S10 TIMES 2
 WHEN  (1)TIMES 0
-%SortScrollAlpha DEPEND %SortOrder LONG TIMES 1
+WHEN  (2)TIMES 0
+%SortScrollAlpha DEPEND %SortOrder LONG TIMES 2
 WHEN  (1) (1)
-%SortScrollNumeric DEPEND %SortOrder LONG TIMES 1
+WHEN  (2) (1)
+%SortScrollNumeric DEPEND %SortOrder LONG TIMES 2
 WHEN  (1) (0)
-%SortScrollAlt DEPEND %SortOrder LONG TIMES 1
+WHEN  (2) (0)
+%SortScrollAlt DEPEND %SortOrder LONG TIMES 2
 WHEN  (1) (0)
+WHEN  (2) (0)
 [ADDITION]
 NAME ABC BrowseSelectButton
 [INSTANCE]
@@ -129,17 +146,19 @@ INSTANCE 5
 %WindowMinWidth    DEFAULT (0)
 %WindowMaxWidth    DEFAULT (0)
 [WINDOW]
-QuickWindow WINDOW('Browse the Equipos file'),AT(,,312,198),IMM,RESIZE,GRAY,MDI,HLP('Brw_EquiposJugadores'),FONT('MS Sans Serif',8,,400,1),CENTER,SYSTEM
-    LIST,AT(8,30,296,124),USE(?Browse:1),MSG('Browsing the Equipos file'),IMM,HVSCROLL,|
-      FORMAT('64R(2)|M~Equipos Id~C(0)@n-14@80L(2)|M~Nombre Equipo~L(2)@s120@80R(2)|M~Alta~C(0)@d17@80R(2)|M~Baja~C(0)@d17@'),|
-      FROM(Queue:Browse:1),#SEQ(1),#ORIG(?List),#FIELDS(Equ:EquiposId,Equ:NombreEquipo,Equ:Alta,Equ:Baja)
-    BUTTON('&Select'),AT(255,158,49,14),USE(?Select:2),ICON('WASELECT.ICO'),FLAT,MSG('Select the Record'),TIP('Select the Record'),LEFT,#SEQ(2),#ORIG(?Select)
-  SHEET,AT(4,4,304,172),USE(?CurrentTab),#ORIG(CurrentTab)
-    TAB('&1) EQU_Por_EquiposId'),USE(?Tab:2)
+QuickWindow WINDOW('Browse the Asociados file'),AT(,,358,198),IMM,RESIZE,GRAY,MDI,HLP('B_CtaCteJugadores'),FONT('MS Sans Serif',8,,400,1),CENTER,SYSTEM
+    LIST,AT(8,30,342,124),USE(?Browse:1),MSG('Browsing the Asociados file'),IMM,HVSCROLL,|
+      FORMAT('64R(2)|M~Asociados Id~C(0)@n-14@64R(2)|M~Equipos Id~C(0)@n-14@80L(2)|M~Apellido Nombre~L(2)@s120@52L(2)|M~Documento~L(2)@P##.###.###PB@80L(2)|M~Dirección~L(2)@s150@80L(2)|M~NS ocio~L(2)@s20@80R(2)|M~Fecha Nacimiento~C(0)@d17@80L(2)|M~Grupo Sanguineo~L(2)@s20@80R(4)|M~Jugador Problematico~C(0)@n3@'),|
+      FROM(Queue:Browse:1),#SEQ(1),#ORIG(?List),#FIELDS(Aso:AsociadosId,Aso:EquiposId,Aso:ApellidoNombre,Aso:Documento,Aso:Dirección,Aso:NSocio,Aso:FechaNacimiento,Aso:GrupoSanguineo,Aso:JugadorProblematico)
+    BUTTON('&Select'),AT(301,158,49,14),USE(?Select:2),ICON('WASELECT.ICO'),FLAT,MSG('Select the Record'),TIP('Select the Record'),LEFT,#SEQ(2),#ORIG(?Select)
+  SHEET,AT(4,4,350,172),USE(?CurrentTab),#ORIG(CurrentTab)
+    TAB('&1) ASO_Por_AsociadosId'),USE(?Tab:2)
     END
-    TAB('&2) EQU_Por_NombreEquipo'),USE(?Tab:3)
+    TAB('&2) ASO_Por_EquiposId'),USE(?Tab:3)
+    END
+    TAB('&3) ASO_Por_ApellidoNombre'),USE(?Tab:4)
     END
   END
-  BUTTON('&Close'),AT(206,180,49,14),USE(?Close),ICON('WACLOSE.ICO'),FLAT,MSG('Close Window'),TIP('Close Window'),LEFT,#SEQ(3),#ORIG(?Close)
-  BUTTON('&Help'),AT(259,180,49,14),USE(?Help),ICON('WAHELP.ICO'),FLAT,MSG('See Help Window'),TIP('See Help Window'),LEFT,STD(STD:Help),#SEQ(4),#ORIG(?Help)
+  BUTTON('&Close'),AT(252,180,49,14),USE(?Close),ICON('WACLOSE.ICO'),FLAT,MSG('Close Window'),TIP('Close Window'),LEFT,#SEQ(3),#ORIG(?Close)
+  BUTTON('&Help'),AT(305,180,49,14),USE(?Help),ICON('WAHELP.ICO'),FLAT,MSG('See Help Window'),TIP('See Help Window'),LEFT,STD(STD:Help),#SEQ(4),#ORIG(?Help)
  END
