@@ -1,5 +1,5 @@
 [PROCEDURE]
-NAME Brw_CtaCteCliente
+NAME B_CtaCteJugadores
 CATEGORY 'Browse'
 [COMMON]
 DESCRIPTION 'Browse the Comprobantes file'
@@ -139,7 +139,7 @@ INSTANCE 4
 PARENT 1
 PROCPROP
 [PROMPTS]
-%UpdateProcedure PROCEDURE  (F_Comprobante)
+%UpdateProcedure PROCEDURE  (UpdateComprobantes)
 %EditViaPopup LONG  (1)
 [ADDITION]
 NAME ABC CloseButton
@@ -160,7 +160,7 @@ INSTANCE 7
 %WindowMinWidth    DEFAULT (0)
 %WindowMaxWidth    DEFAULT (0)
 [WINDOW]
-QuickWindow WINDOW('Browse the Comprobantes file'),AT(,,340,198),IMM,RESIZE,GRAY,MDI,HLP('Brw_CtaCteCliente'),FONT('MS Sans Serif',8,,400,1),CENTER,SYSTEM
+QuickWindow WINDOW('Browse the Comprobantes file'),AT(,,340,198),IMM,RESIZE,GRAY,MDI,HLP('B_CtaCteJugadores'),FONT('MS Sans Serif',8,,400,1),CENTER,SYSTEM
     LIST,AT(8,30,324,124),USE(?Browse:1),MSG('Browsing the Comprobantes file'),IMM,HVSCROLL,|
       FORMAT('64R(2)|M~Comprobantes Id~C(0)@n-14@80R(4)|M~Tipo Comprobantes ID~C(0)@n-14@64R(2)|M~Asociados Id~C(0)@n-14@80L(2)|M~Descripcion~L(2)@s120@44D(18)|M~Monto~C(0)@n10.2@'),|
       FROM(Queue:Browse:1),#SEQ(1),#ORIG(?List),#FIELDS(Com:ComprobantesId,Com:TipoComprobantesID,Com:AsociadosId,Com:Descripcion,Com:Monto)
@@ -181,7 +181,7 @@ QuickWindow WINDOW('Browse the Comprobantes file'),AT(,,340,198),IMM,RESIZE,GRAY
   BUTTON('&Help'),AT(287,180,49,14),USE(?Help),ICON('WAHELP.ICO'),FLAT,MSG('See Help Window'),TIP('See Help Window'),LEFT,STD(STD:Help),#SEQ(6),#ORIG(?Help)
  END
 [PROCEDURE]
-NAME F_Comprobante
+NAME UpdateComprobantes
 CATEGORY 'Form'
 [COMMON]
 DESCRIPTION 'Form Comprobantes'
@@ -284,7 +284,7 @@ INSTANCE 6
 %WindowMinWidth    DEFAULT (0)
 %WindowMaxWidth    DEFAULT (0)
 [WINDOW]
-QuickWindow WINDOW('Form Comprobantes'),AT(,,358,112),RESIZE,IMM,GRAY,MDI,HLP('F_Comprobante'),FONT('MS Sans Serif',8,,400,1),CENTER,SYSTEM
+QuickWindow WINDOW('Form Comprobantes'),AT(,,358,112),RESIZE,IMM,GRAY,MDI,HLP('UpdateComprobantes'),FONT('MS Sans Serif',8,,400,1),CENTER,SYSTEM
   SHEET,AT(4,4,350,86),USE(?CurrentTab),#ORIG(CurrentTab)
     TAB('&1) General'),USE(?Tab:1)
          PROMPT('Comprobantes Id:'),USE(?Com:ComprobantesId:Prompt),TRN,AT(8,20),#ORIG(?Com:ComprobantesId:Prompt),#LINK(Com:ComprobantesId)
